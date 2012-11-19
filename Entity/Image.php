@@ -21,27 +21,27 @@ abstract class Image
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * Not used anywhere, but saved incase it is needed in the future.
      * @var $originalName
      * @ORM\Column(name="original_name", type="string", length=255)
      */
-    private $originalName;
+    protected $originalName;
 
     /**
      * Sprintf %size% with the correct file size.
      * @var $path;
      * @ORM\Column(type="string",length=255,nullable=true)
      */
-    private $path;
+    protected $path;
 
     /**
      * @var \DateTime $createdAt
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @param mixed $source URL or \Symfony\Component\HttpFoundation\File\UploadedFile
