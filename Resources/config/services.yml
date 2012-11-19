@@ -1,0 +1,10 @@
+parameters:
+#    mt_media.example.class: MT\Bundle\MediaBundle\Example
+
+services:
+
+    twig.extension.mtmediaextension:
+        class: MT\Bundle\MediaBundle\TwigExtension
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: twig.extension }

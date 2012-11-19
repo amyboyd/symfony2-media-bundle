@@ -1,0 +1,20 @@
+<?php
+
+// This is just a demonstration of how to use properly extend MT\Bundle\MediaBundle\Entity\Image.
+// The class name could be something like UserAvatar, CarPhoto, etc.
+
+//namespace MT\Bundle\MediaBundle\Entity;
+//
+//use Doctrine\ORM\Mapping as ORM;
+//
+///**
+// * @ORM\Entity(repositoryClass="MT\Bundle\MediaBundle\Entity\ImageRepository")
+// * @ORM\Table(name="mtmediabundle_sample_image")
+// */
+//class SampleImage extends \MT\Bundle\MediaBundle\Entity\Image
+//{
+//    final protected function getAllSizes()
+//    {
+//        return array('192x114', '90x90');
+//    }
+//}
