@@ -44,6 +44,16 @@ abstract class Image
     protected $createdAt;
 
     /**
+     * @ORM\Column(name="original_width", type="smallint")
+     */
+    protected $originalWidth;
+
+    /**
+     * @ORM\Column(name="original_height", type="smallint")
+     */
+    protected $originalHeight;
+
+    /**
      * @param mixed $source URL or \Symfony\Component\HttpFoundation\File\UploadedFile
      * @throws \Exception if $source is not supported.
      */
@@ -113,7 +123,12 @@ abstract class Image
 
         // Create the different thumbnail sizes.
         $imagine = self::getImagineInterface();
-        $image = $imagine->open($uploadedFile->getPathname());
+        $image = $imagine->open($uploadedFile->getPathname()); /* @var $image \Imagine\Gd\Image */
+
+        $size = $image->getSize();
+        $this->originalWidth = $size->getWidth();
+        $this->originalHeight = $size->getHeight();
+
         $image->strip(); // privacy
         foreach ($this->getAllSizesAndOriginal() as $size) {
             if ($size === 'original') {
@@ -248,5 +263,15 @@ abstract class Image
     {
         // Override this if you want to.
         return $thumbnail;
+    }
+
+    public function getOriginalWidth()
+    {
+        return $this->originalWidth;
+    }
+
+    public function getOriginalHeight()
+    {
+        return $this->originalHeight;
     }
 }
