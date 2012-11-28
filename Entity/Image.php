@@ -274,4 +274,9 @@ abstract class Image
     {
         return $this->originalHeight;
     }
+
+    public function fileExists($size)
+    {
+        return file_exists($this->getAbsolutePath($size));
+    }
 }
