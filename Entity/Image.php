@@ -3,6 +3,7 @@
 namespace MT\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+// @todo - use Symfony\Component\HttpFoundation\File\File instead of UploadedFile.
 use Symfony\Component\HttpFoundation\File\UploadedFile as File;
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 use Imagine\Image\ManipulatorInterface;
@@ -65,6 +66,9 @@ abstract class Image
         elseif (is_string($source) && strpos($source, 'http') === 0) {
             $this->createFromUrl($source);
         }
+        elseif (is_string($source) && file_exists($source)) {
+            $this->createFromFilePath($source);
+        }
         else {
             throw new \Exception('Unsupported source');
         }
@@ -103,6 +107,15 @@ abstract class Image
         file_put_contents($tmpFile, file_get_contents($url));
 
         $file = new File($tmpFile, $filename, null, filesize($tmpFile));
+        $this->createFromFile($file);
+    }
+
+    private function createFromFilePath($path)
+    {
+        $filename = explode('/', $path);
+        $filename = $filename[count($filename) - 1];
+
+        $file = new File($path, $filename, null, filesize($path));
         $this->createFromFile($file);
     }
 
