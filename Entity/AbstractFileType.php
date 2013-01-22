@@ -5,8 +5,7 @@ namespace MT\Bundle\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 // @todo - use Symfony\Component\HttpFoundation\File\File instead of UploadedFile.
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-// @todo - create a library-specific exception class.
+use MT\Bundle\MediaBundle\Exception as BundleException;
 
 abstract class AbstractFileType
 {
@@ -35,7 +34,7 @@ abstract class AbstractFileType
 
     /**
      * @param mixed $source URL or \Symfony\Component\HttpFoundation\File\UploadedFile
-     * @throws \Exception if $source is not supported.
+     * @throws BundleException if $source is not supported.
      */
     public function __construct($source)
     {
@@ -49,7 +48,7 @@ abstract class AbstractFileType
             $this->createFromFilePath($source);
         }
         else {
-            throw new \Exception('Unsupported source');
+            throw new BundleException('Unsupported source');
         }
     }
 

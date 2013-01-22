@@ -7,6 +7,7 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Imagine\Image\ManipulatorInterface;
 use Imagine\Image\ImagineInterface;
+use MT\Bundle\MediaBundle\Exception as BundleException;
 
 /**
  * @ORM\MappedSuperclass
@@ -104,7 +105,7 @@ abstract class Image extends AbstractFileType
         }
 
         if (!is_dir($webRoot)) {
-            throw new \Exception('Web dir not known');
+            throw new BundleException('Web dir not known');
         }
 
         return $webRoot . '/' . str_replace('%size%', $size, $this->path);

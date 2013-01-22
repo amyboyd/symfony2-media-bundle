@@ -4,6 +4,7 @@ namespace MT\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use MT\Bundle\MediaBundle\Exception as BundleException;
 
 /**
  * @ORM\Table(name="mtmediabundle_file")
@@ -45,7 +46,7 @@ class File extends AbstractFileType
         }
 
         if (!is_dir($webRoot)) {
-            throw new \Exception('Web dir not known');
+            throw new BundleException('Web dir not known');
         }
 
         return $webRoot . '/' . $this->path;
