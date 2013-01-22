@@ -4,7 +4,7 @@ namespace MT\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 // @todo - use Symfony\Component\HttpFoundation\File\File instead of UploadedFile.
-use Symfony\Component\HttpFoundation\File\UploadedFile as File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 use Imagine\Image\ManipulatorInterface;
 use Imagine\Image\ImagineInterface;
@@ -60,7 +60,7 @@ abstract class Image
      */
     public function __construct($source)
     {
-        if ($source instanceof File) {
+        if ($source instanceof UploadedFile) {
             $this->createFromFile($source);
         }
         elseif (is_string($source) && strpos($source, 'http') === 0) {
@@ -74,7 +74,7 @@ abstract class Image
         }
     }
 
-    private function createFromFile(File $uploadedFile)
+    private function createFromFile(UploadedFile $uploadedFile)
     {
         $this->originalName = $uploadedFile->getClientOriginalName();
 
@@ -106,7 +106,7 @@ abstract class Image
         $tmpFile = $tmpDir . rand() . '-' . $filename;
         file_put_contents($tmpFile, file_get_contents($url));
 
-        $file = new File($tmpFile, $filename, null, filesize($tmpFile));
+        $file = new UploadedFile($tmpFile, $filename, null, filesize($tmpFile));
         $this->createFromFile($file);
     }
 
@@ -115,7 +115,7 @@ abstract class Image
         $filename = explode('/', $path);
         $filename = $filename[count($filename) - 1];
 
-        $file = new File($path, $filename, null, filesize($path));
+        $file = new UploadedFile($path, $filename, null, filesize($path));
         $this->createFromFile($file);
     }
 
@@ -127,7 +127,7 @@ abstract class Image
         }
     }
 
-    private function createThumbnails(File $uploadedFile)
+    private function createThumbnails(UploadedFile $uploadedFile)
     {
         // Load the Imagine library.
         $loader = new UniversalClassLoader();
@@ -260,7 +260,7 @@ abstract class Image
         return $this->originalName;
     }
 
-    protected function getFileExtensionToSaveAs(File $file)
+    protected function getFileExtensionToSaveAs(UploadedFile $file)
     {
         // Override this if you want to.
         return $file->guessExtension();
