@@ -58,6 +58,7 @@ class File extends AbstractFileType
     public function getWebPath($absolute = false)
     {
         $path = $this->path;
+        $path = str_replace('%size%', '%25size%25', $path);
         if ($absolute) {
             $protocol = (isset($_SERVER['HTTPS']) && (bool) $_SERVER['HTTPS'] ? 'https' : 'http');
             return $protocol . '://' . $_SERVER['HTTP_HOST'] . '/' . $path;
