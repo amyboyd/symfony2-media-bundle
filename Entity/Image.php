@@ -117,13 +117,15 @@ abstract class Image extends AbstractFileType
     public function getWebPath($size, $absolute = false)
     {
         $path = str_replace('%size%', $size, $this->path);
+        $path = ltrim($path, '/');
+
         if ($absolute) {
             $protocol = (isset($_SERVER['HTTPS']) && (bool) $_SERVER['HTTPS'] ? 'https' : 'http');
-            return $protocol . '://' . $_SERVER['HTTP_HOST'] . $path;
-        } else {
-            $path = '/' . ltrim($path, '/');
+            return $protocol . '://' . $_SERVER['HTTP_HOST'] . '/' . $path;
         }
-        return $path;
+        else {
+            return '/' . $path;
+        }
     }
 
     /**
