@@ -41,12 +41,6 @@ abstract class Image extends AbstractFileType
 
     private function createThumbnails(UploadedFile $uploadedFile)
     {
-        // Load the Imagine library.
-        $loader = new UniversalClassLoader();
-        $loader->registerNamespace('Imagine', \realpath(__DIR__ . '/../lib/imagine/lib'));
-        $loader->register();
-
-        // Create the different thumbnail sizes.
         $imagine = self::getImagineInterface();
         $image = $imagine->open($uploadedFile->getPathname()); /* @var $image \Imagine\Gd\Image */
 
@@ -55,6 +49,8 @@ abstract class Image extends AbstractFileType
         $this->originalHeight = $size->getHeight();
 
         $image->strip(); // privacy
+
+        // Create the different thumbnail sizes.
         foreach ($this->getAllSizesAndOriginal() as $size) {
             if ($size === 'original') {
                 // Original.
