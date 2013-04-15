@@ -67,6 +67,24 @@ abstract class Image extends AbstractFileType
         }
     }
 
+    public function recreateThumbnails()
+    {
+        $imagine = self::getImagineInterface();
+        $image = $imagine->open($this->getAbsolutePath('original'));
+        /* @var $image \Imagine\Gd\Image */
+
+        // Create the different thumbnail sizes.
+        foreach ($this->getAllSizes() as $size) {
+            list($width, $height) = explode('x', $size);
+            $thumbnail = $image->thumbnail(
+                new \Imagine\Image\Box($width, $height),
+                \Imagine\Image\ManipulatorInterface::THUMBNAIL_OUTBOUND
+            );
+            $thumbnail = $this->postResizeHook($thumbnail, $size, $imagine);
+            $thumbnail->save(str_replace('%size%', $size, $this->getAbsolutePath($size)));
+        }
+    }
+
     private static $hasRegisteredImagineNamespace = false;
 
     /**
