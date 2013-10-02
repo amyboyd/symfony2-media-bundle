@@ -1,7 +1,9 @@
-Sample Use
+Usage
 ----------
 
-See `Entity/SampleImage.php.sample`
+Extend the Image/File classes. See `Entity/SampleImage.php.sample` for a sample.
+
+If you add more image thumbnail sizes to `getAllSizes()`, or you change the `postResizeHook()`, you can re-generate all thumbnails with the command `mt-media:recreate-thumbnails-command`.
 
 Install
 -------
