@@ -1,14 +1,16 @@
-## Sample Use ##
+Sample Use
+----------
 
 See `Entity/SampleImage.php.sample`
 
-## Install ##
+Install
+-------
 
-* If you use Git, run: `git submodule add https://github.com/avalanche123/Imagine.git path/to/bundles/MT/Bundle/MediaBundle/lib/imagine`
+* `git checkout git@github.com:amyboyd/symfony2-media-bundle.git vendor/bundles/MT/Bundle/MediaBundle`
 
-* If you don't use Git, download the Imagine library and put it in your bundles directory.
+* `git checkout git@github.com:avalanche123/Imagine.git vendor/bundles/MT/Bundle/MediaBundle/lib/imagine`
 
-* Enable MTMediaBundle bundle in AppKernel.php
+* Enable the MTMediaBundle bundle in `AppKernel.php`
 
 * Review `app/console doctrine:schema:update --dump-sql`
 
